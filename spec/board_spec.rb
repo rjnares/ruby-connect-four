@@ -58,7 +58,7 @@ describe Board do
 
       context 'when the column is half-full' do
         before do
-          (column.length - 3).times { |index| column[index] = token }
+          (column.length - 3).times { |row_index| column[row_index] = token }
         end
 
         it 'adds a single token to the column' do
@@ -88,6 +88,91 @@ describe Board do
           result = board.insert(column_index, token)
           expect(result).to eq(false)
         end
+      end
+    end
+  end
+
+  describe '#win?' do
+    let(:token) { '#' }
+
+    context 'when testing for win conditions' do
+      before do
+        allow(board).to receive(:win_vertically?)
+        allow(board).to receive(:win_horizontally?)
+        allow(board).to receive(:win_diagonally?)
+      end
+
+      it 'calls #win_vertically? once' do
+        expect(board).to receive(:win_vertically?).with(token).once
+        board.win?(token)
+      end
+
+      it 'calls #win_horizontally? once' do
+        expect(board).to receive(:win_horizontally?).with(token).once
+        board.win?(token)
+      end
+
+      it 'calls #win_diagonally? once' do
+        expect(board).to receive(:win_diagonally?).with(token).once
+        board.win?(token)
+      end
+    end
+
+    context 'when four tokens are connected vertically' do
+      let(:column_index) { 3 }
+      let(:column) { array[column_index] }
+
+      before do
+        4.times { |row_index| column[row_index] = token }
+      end
+
+      it 'returns true' do
+        result = board.win?(token)
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when four tokens are connected horizontally' do
+      let(:row_index) { 4 }
+
+      before do
+        4.times { |column_index| array[column_index][row_index] = token }
+      end
+      it 'returns true' do
+        result = board.win?(token)
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when four tokens are connected diagonally (top-left to bottom-right)' do
+      before do
+        4.times do |index|
+          column = array[index]
+          column[column.length - 1 - index] = token
+        end
+      end
+
+      it 'returns true' do
+        result = board.win?(token)
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when four tokens are connected diagonally (bottom-left to top-right)' do
+      before do
+        4.times { |index| array[index][index] = token }
+      end
+
+      it 'returns true' do
+        result = board.win?(token)
+        expect(result).to eq(true)
+      end
+    end
+
+    context 'when four tokens are NOT connected' do
+      it 'returns false' do
+        result = board.win?(token)
+        expect(result).to eq(false)
       end
     end
   end
