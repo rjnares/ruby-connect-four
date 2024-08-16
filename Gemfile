@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 # gem "rails"
 
-gem 'rubocop', '~> 1.65', require: false
+gem 'colorize', '~> 1.1'
 gem 'rspec', '~> 3.13'
+gem 'rubocop', '~> 1.65', require: false
