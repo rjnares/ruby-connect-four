@@ -26,6 +26,7 @@ describe Game do
 
   describe '#next_column_choice' do
     before do
+      allow(game).to receive(:current_game_state_message)
       allow(board).to receive(:draw)
       allow(game).to receive(:choose_column_message)
       allow(game).to receive(:string_to_int)
@@ -36,6 +37,11 @@ describe Game do
     context 'when user input is invalid once' do
       before do
         allow(board).to receive(:valid_column?).and_return(false, true)
+      end
+
+      it 'invokes #current_game_state_message once' do
+        expect(game).to receive(:current_game_state_message).once
+        game.next_column_choice
       end
 
       it 'invokes Board#draw twice' do
@@ -72,6 +78,11 @@ describe Game do
     context 'when user input is invalid five times' do
       before do
         allow(board).to receive(:valid_column?).and_return(false, false, false, false, false, true)
+      end
+
+      it 'invokes #current_game_state_message once' do
+        expect(game).to receive(:current_game_state_message).once
+        game.next_column_choice
       end
 
       it 'invokes Board#draw six times' do
@@ -111,6 +122,11 @@ describe Game do
       before do
         allow(game).to receive(:string_to_int).and_return(column)
         allow(board).to receive(:valid_column?).and_return(true)
+      end
+
+      it 'invokes #current_game_state_message once' do
+        expect(game).to receive(:current_game_state_message).once
+        game.next_column_choice
       end
 
       it 'returns validated user input' do

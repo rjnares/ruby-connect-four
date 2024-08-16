@@ -3,6 +3,7 @@
 # Module for game input/output
 module GameIO
   def next_column_choice
+    current_game_state_message
     loop do
       board.draw
       choose_column_message
@@ -22,6 +23,13 @@ module GameIO
     puts <<~HEREDOC
 
       Full or invalid column entered, please try again...
+    HEREDOC
+  end
+
+  def current_game_state_message
+    puts <<~HEREDOC
+
+      Current game state
     HEREDOC
   end
 end
