@@ -25,6 +25,17 @@ class Board
     win_vertically?(token) || win_horizontally?(token) || win_diagonally?(token)
   end
 
+  def draw
+    (HEIGHT - 1).downto(0) do |row_index|
+      0.upto(WIDTH - 1) do |column_index|
+        print " #{board[column_index][row_index]} "
+      end
+      puts
+    end
+
+    0.upto(WIDTH - 1) { |column_index| print " #{column_index} " }
+  end
+
   def valid_column?(column)
     return false unless (0...WIDTH).include?(column)
 

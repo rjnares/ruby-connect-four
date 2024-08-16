@@ -13,4 +13,10 @@ class Game
   private
 
   attr_reader :board
+
+  def string_to_int(string)
+    Integer(string || '', 10)
+  rescue ArgumentError
+    nil
+  end
 end
