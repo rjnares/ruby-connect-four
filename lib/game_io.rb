@@ -16,7 +16,7 @@ module GameIO
 
   def choose_column_message
     puts
-    print "Choose a column between 0 and #{board.WIDTH - 1} to drop your token into: "
+    print "Choose a column between 0 and #{Board::WIDTH - 1} to drop your token into: "
   end
 
   def invalid_column_message
