@@ -25,6 +25,12 @@ class Board
     win_vertically?(token) || win_horizontally?(token) || win_diagonally?(token)
   end
 
+  def valid_column?(column)
+    return false unless (0...WIDTH).include?(column)
+
+    board[column].count(nil).positive?
+  end
+
   private
 
   attr_reader :board

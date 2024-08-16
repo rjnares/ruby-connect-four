@@ -176,4 +176,37 @@ describe Board do
       end
     end
   end
+
+  describe '#valid_column?' do
+    context 'when column is out of range' do
+      let(:out_of_range_column) { -1 }
+
+      it 'returns false' do
+        result = board.valid_column?(out_of_range_column)
+        expect(result).to eq(false)
+      end
+    end
+
+    context 'when column is full' do
+      let(:full_column) { 0 }
+
+      before do
+        array[full_column].fill('#')
+      end
+
+      it 'returns false' do
+        result = board.valid_column?(full_column)
+        expect(result).to eq(false)
+      end
+    end
+
+    context 'when column is in range and non-full' do
+      let(:valid_column) { 0 }
+
+      it 'returns true' do
+        result = board.valid_column?(valid_column)
+        expect(result).to eq(true)
+      end
+    end
+  end
 end
