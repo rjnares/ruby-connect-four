@@ -4,6 +4,7 @@
 class Board
   WIDTH = 7
   HEIGHT = 6
+  EMPTY_TOKEN = "\u25CC".encode('UTF-8')
 
   def initialize
     @board = Array.new(WIDTH) { Array.new(HEIGHT) }
@@ -26,14 +27,8 @@ class Board
   end
 
   def draw
-    (HEIGHT - 1).downto(0) do |row_index|
-      0.upto(WIDTH - 1) do |column_index|
-        print " #{board[column_index][row_index]} "
-      end
-      puts
-    end
-
-    0.upto(WIDTH - 1) { |column_index| print " #{column_index} " }
+    print_token_rows
+    print_columns_row
   end
 
   def valid_column?(column)
@@ -110,5 +105,21 @@ class Board
     column_index_in_range = (0...WIDTH).include?(column_index)
     row_index_in_range = (0...HEIGHT).include?(row_index)
     column_index_in_range && row_index_in_range
+  end
+
+  def print_token_rows
+    puts
+    (HEIGHT - 1).downto(0) do |row_index|
+      0.upto(WIDTH - 1) do |column_index|
+        token = board[column_index][row_index]
+        print " #{token.nil? ? EMPTY_TOKEN : token} "
+      end
+      puts
+    end
+  end
+
+  def print_columns_row
+    puts
+    0.upto(WIDTH - 1) { |column_index| print " #{column_index} " }
   end
 end

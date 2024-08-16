@@ -209,4 +209,23 @@ describe Board do
       end
     end
   end
+
+  describe '#draw' do
+    before do
+      allow(board).to receive(:print_token_rows)
+      allow(board).to receive(:print_columns_row)
+    end
+
+    context 'when invoked' do
+      it 'invokes #print_token_rows once' do
+        expect(board).to receive(:print_token_rows).once
+        board.draw
+      end
+
+      it 'invokes #print_columns_row once' do
+        expect(board).to receive(:print_columns_row).once
+        board.draw
+      end
+    end
+  end
 end
