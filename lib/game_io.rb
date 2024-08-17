@@ -2,6 +2,23 @@
 
 # Module for game input/output
 module GameIO
+  def welcome_and_instructions_message
+    puts <<~HEREDOC
+
+      Welcome to my Connect Four Game built with Ruby!
+
+      The rules are simple. Both players take turns dropping tokens into the
+      6x7 grid until one of them wins by connecting four horizontally,
+      vertically, or diagonally. If all spaces are filled before either
+      player connects four tokens, then the game will end in a tie.
+
+      This game will be played against the CPU, good luck!
+
+      Your token: #{Game::PLAYER_TOKEN_1}
+       CPU token: #{Game::PLAYER_TOKEN_2}
+    HEREDOC
+  end
+
   def next_column_choice
     current_game_state_message
     loop do
