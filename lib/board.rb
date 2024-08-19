@@ -83,7 +83,7 @@ class Board
     diagonals = []
 
     while in_range?(c, r)
-      diagonals << board[c, r]
+      diagonals << (board[c][r].nil? ? ' ' : board[c][r])
       c += 1
       r -= 1
     end
@@ -102,7 +102,7 @@ class Board
     diagonals = []
 
     while in_range?(c, r)
-      diagonals << board[c][r]
+      diagonals << (board[c][r].nil? ? ' ' : board[c][r])
       c += 1
       r += 1
     end

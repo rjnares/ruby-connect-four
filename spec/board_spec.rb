@@ -190,9 +190,9 @@ describe Board do
       end
     end
 
-    context 'when four tokens are connected diagonally (top-left to bottom-right)' do
+    context 'when (top-left to bottom-right) diagonal contains four connected tokens' do
       before do
-        4.times do |index|
+        5.times do |index|
           column = array[index]
           column[column.length - 1 - index] = token
         end
@@ -201,6 +201,21 @@ describe Board do
       it 'returns true' do
         result = board.win?(token)
         expect(result).to eq(true)
+      end
+    end
+
+    context 'when (top-left to bottom-right) diagonal contains four non-connected tokens' do
+      before do
+        5.times do |index|
+          column = array[index]
+          column[column.length - 1 - index] = token
+        end
+        array[3][2] = nil
+      end
+
+      it 'returns false' do
+        result = board.win?(token)
+        expect(result).to eq(false)
       end
     end
 
