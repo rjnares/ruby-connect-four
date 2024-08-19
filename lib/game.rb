@@ -17,15 +17,20 @@ class Game
   end
 
   def play
-    board.insert(0, PLAYER_TOKEN_1)
-    board.insert(0, PLAYER_TOKEN_2)
-    board.insert(1, PLAYER_TOKEN_2)
-    board.insert(1, PLAYER_TOKEN_1)
-    board.insert(2, PLAYER_TOKEN_1)
-    board.insert(2, PLAYER_TOKEN_1)
-    board.insert(6, PLAYER_TOKEN_2)
-    board.insert(6, PLAYER_TOKEN_2)
-    next_column_choice
+    welcome_and_instructions_message
+
+    loop do
+      board.insert(next_column_choice, PLAYER_TOKEN_1)
+      break if game_over?(PLAYER_TOKEN_1)
+
+      board.insert(next_cpu_column_choice, PLAYER_TOKEN_2)
+      break if game_over?(PLAYER_TOKEN_2)
+    end
+
+    return player_win_message if winner == PLAYER_TOKEN_1
+    return player_lose_message if winner == PLAYER_TOKEN_2
+
+    tie_message
   end
 
   private

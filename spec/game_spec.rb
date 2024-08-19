@@ -28,6 +28,441 @@ describe Game do
       expect(actual).to be_nil
     end
   end
+
+  describe '#play' do
+    before do
+      allow(game).to receive(:welcome_and_instructions_message)
+      allow(game).to receive(:next_column_choice)
+      allow(game).to receive(:next_cpu_column_choice)
+      allow(game).to receive(:player_win_message)
+      allow(game).to receive(:player_lose_message)
+      allow(game).to receive(:tie_message)
+      allow(board).to receive(:insert)
+    end
+
+    context 'when player 1 wins' do
+      before do
+        allow(game).to receive(:winner).and_return(Game::PLAYER_TOKEN_1)
+      end
+
+      context 'on turn one (impossible but test behavior anyway)' do
+        before do
+          allow(game).to receive(:game_over?).and_return(true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice once' do
+          expect(game).to receive(:next_column_choice).once
+          game.play
+        end
+
+        it 'invokes Board#insert once' do
+          expect(board).to receive(:insert).once
+          game.play
+        end
+
+        it 'invokes #game_over? once' do
+          expect(game).to receive(:game_over?).once
+          game.play
+        end
+
+        it 'does not invoke #next_cpu_column_choice' do
+          expect(game).not_to receive(:next_cpu_column_choice)
+          game.play
+        end
+
+        it 'invokes #winner once' do
+          expect(game).to receive(:winner).once
+          game.play
+        end
+
+        it 'invokes #player_win_message once' do
+          expect(game).to receive(:player_win_message).once
+          game.play
+        end
+
+        it 'does not invoke #player_lose_message' do
+          expect(game).not_to receive(:player_lose_message)
+          game.play
+        end
+
+        it 'does not invoke #tie_message' do
+          expect(game).not_to receive(:tie_message)
+          game.play
+        end
+      end
+
+      context 'on turn four' do
+        before do
+          allow(game).to receive(:game_over?).and_return(false, false, false, false, false, false, true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice exactly 4 times' do
+          expect(game).to receive(:next_column_choice).exactly(4).times
+          game.play
+        end
+
+        it 'invokes Board#insert exactly 7 times' do
+          expect(board).to receive(:insert).exactly(7).times
+          game.play
+        end
+
+        it 'invokes #game_over? exactly 7 times' do
+          expect(game).to receive(:game_over?).exactly(7).times
+          game.play
+        end
+
+        it 'invokes #next_cpu_column_choice exactly 3 times' do
+          expect(game).to receive(:next_cpu_column_choice).exactly(3).times
+          game.play
+        end
+
+        it 'invokes #winner once' do
+          expect(game).to receive(:winner).once
+          game.play
+        end
+
+        it 'invokes #player_win_message once' do
+          expect(game).to receive(:player_win_message).once
+          game.play
+        end
+
+        it 'does not invoke #player_lose_message' do
+          expect(game).not_to receive(:player_lose_message)
+          game.play
+        end
+
+        it 'does not invoke #tie_message' do
+          expect(game).not_to receive(:tie_message)
+          game.play
+        end
+      end
+    end
+
+    context 'when player 2 wins' do
+      before do
+        allow(game).to receive(:winner).and_return(Game::PLAYER_TOKEN_2)
+      end
+
+      context 'on turn one (impossible but test behavior anyway)' do
+        before do
+          allow(game).to receive(:game_over?).and_return(false, true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice once' do
+          expect(game).to receive(:next_column_choice).once
+          game.play
+        end
+
+        it 'invokes Board#insert twice' do
+          expect(board).to receive(:insert).twice
+          game.play
+        end
+
+        it 'invokes #game_over? twice' do
+          expect(game).to receive(:game_over?).twice
+          game.play
+        end
+
+        it 'invokes #next_cpu_column_choice once' do
+          expect(game).to receive(:next_cpu_column_choice).once
+          game.play
+        end
+
+        it 'invokes #winner twice' do
+          expect(game).to receive(:winner).twice
+          game.play
+        end
+
+        it 'does not invoke #player_win_message' do
+          expect(game).not_to receive(:player_win_message)
+          game.play
+        end
+
+        it 'invokes #player_lose_message once' do
+          expect(game).to receive(:player_lose_message).once
+          game.play
+        end
+
+        it 'does not invoke #tie_message' do
+          expect(game).not_to receive(:tie_message)
+          game.play
+        end
+      end
+
+      context 'on turn four' do
+        before do
+          allow(game).to receive(:game_over?).and_return(false, false, false, false, false, false, false, true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice exactly four times' do
+          expect(game).to receive(:next_column_choice).exactly(4).times
+          game.play
+        end
+
+        it 'invokes Board#insert exactly eight times' do
+          expect(board).to receive(:insert).exactly(8).times
+          game.play
+        end
+
+        it 'invokes #game_over? exactly eight times' do
+          expect(game).to receive(:game_over?).exactly(8).times
+          game.play
+        end
+
+        it 'invokes #next_cpu_column_choice exactly four times' do
+          expect(game).to receive(:next_cpu_column_choice).exactly(4).times
+          game.play
+        end
+
+        it 'invokes #winner twice' do
+          expect(game).to receive(:winner).twice
+          game.play
+        end
+
+        it 'does not invoke #player_win_message' do
+          expect(game).not_to receive(:player_win_message)
+          game.play
+        end
+
+        it 'invokes #player_lose_message once' do
+          expect(game).to receive(:player_lose_message).once
+          game.play
+        end
+
+        it 'does not invoke #tie_message' do
+          expect(game).not_to receive(:tie_message)
+          game.play
+        end
+      end
+    end
+
+    context 'when player 1 fills board' do
+      context 'on turn one (impossible but test behavior anyway)' do
+        before do
+          allow(game).to receive(:game_over?).and_return(true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice once' do
+          expect(game).to receive(:next_column_choice).once
+          game.play
+        end
+
+        it 'invokes Board#insert once' do
+          expect(board).to receive(:insert).once
+          game.play
+        end
+
+        it 'invokes #game_over? once' do
+          expect(game).to receive(:game_over?).once
+          game.play
+        end
+
+        it 'does not invoke #next_cpu_column_choice' do
+          expect(game).not_to receive(:next_cpu_column_choice)
+          game.play
+        end
+
+        it 'invokes #winner twice' do
+          expect(game).to receive(:winner).twice
+          game.play
+        end
+
+        it 'does not invoke #player_win_message' do
+          expect(game).not_to receive(:player_win_message)
+          game.play
+        end
+
+        it 'does not invoke #player_lose_message' do
+          expect(game).not_to receive(:player_lose_message)
+          game.play
+        end
+
+        it 'invokes #tie_message once' do
+          expect(game).to receive(:tie_message).once
+          game.play
+        end
+      end
+
+      context 'on turn four (impossible but test behavior anyway)' do
+        before do
+          allow(game).to receive(:game_over?).and_return(false, false, false, false, false, false, true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice exactly four times' do
+          expect(game).to receive(:next_column_choice).exactly(4).times
+          game.play
+        end
+
+        it 'invokes Board#insert exactly seven times' do
+          expect(board).to receive(:insert).exactly(7).times
+          game.play
+        end
+
+        it 'invokes #game_over? exactly seven times' do
+          expect(game).to receive(:game_over?).exactly(7).times
+          game.play
+        end
+
+        it 'invokes #next_cpu_column_choice exactly three times' do
+          expect(game).to receive(:next_cpu_column_choice).exactly(3).times
+          game.play
+        end
+
+        it 'invokes #winner twice' do
+          expect(game).to receive(:winner).twice
+          game.play
+        end
+
+        it 'does not invoke #player_win_message' do
+          expect(game).not_to receive(:player_win_message)
+          game.play
+        end
+
+        it 'does not invoke #player_lose_message' do
+          expect(game).not_to receive(:player_lose_message)
+          game.play
+        end
+
+        it 'invokes #tie_message once' do
+          expect(game).to receive(:tie_message).once
+          game.play
+        end
+      end
+    end
+
+    context 'when player 2 fills board' do
+      context 'on turn one (impossible but test behavior anyway)' do
+        before do
+          allow(game).to receive(:game_over?).and_return(false, true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice once' do
+          expect(game).to receive(:next_column_choice).once
+          game.play
+        end
+
+        it 'invokes Board#insert twice' do
+          expect(board).to receive(:insert).twice
+          game.play
+        end
+
+        it 'invokes #game_over? twice' do
+          expect(game).to receive(:game_over?).twice
+          game.play
+        end
+
+        it 'invokes #next_cpu_column_choice once' do
+          expect(game).to receive(:next_cpu_column_choice).once
+          game.play
+        end
+
+        it 'invokes #winner twice' do
+          expect(game).to receive(:winner).twice
+          game.play
+        end
+
+        it 'does not invoke #player_win_message' do
+          expect(game).not_to receive(:player_win_message)
+          game.play
+        end
+
+        it 'does not invoke #player_lose_message' do
+          expect(game).not_to receive(:player_lose_message)
+          game.play
+        end
+
+        it 'invokes #tie_message once' do
+          expect(game).to receive(:tie_message).once
+          game.play
+        end
+      end
+
+      context 'on turn four (impossible but test behavior anyway)' do
+        before do
+          allow(game).to receive(:game_over?).and_return(false, false, false, false, false, false, false, true)
+        end
+
+        it 'invokes #welcome_and_instructions_message once' do
+          expect(game).to receive(:welcome_and_instructions_message).once
+          game.play
+        end
+
+        it 'invokes #next_column_choice exactly four times' do
+          expect(game).to receive(:next_column_choice).exactly(4).times
+          game.play
+        end
+
+        it 'invokes Board#insert exactly eight times' do
+          expect(board).to receive(:insert).exactly(8).times
+          game.play
+        end
+
+        it 'invokes #game_over? exactly eight times' do
+          expect(game).to receive(:game_over?).exactly(8).times
+          game.play
+        end
+
+        it 'invokes #next_cpu_column_choice exactly four times' do
+          expect(game).to receive(:next_cpu_column_choice).exactly(4).times
+          game.play
+        end
+
+        it 'invokes #winner twice' do
+          expect(game).to receive(:winner).twice
+          game.play
+        end
+
+        it 'does not invoke #player_win_message' do
+          expect(game).not_to receive(:player_win_message)
+          game.play
+        end
+
+        it 'does not invoke #player_lose_message' do
+          expect(game).not_to receive(:player_lose_message)
+          game.play
+        end
+
+        it 'invokes #tie_message once' do
+          expect(game).to receive(:tie_message).once
+          game.play
+        end
+      end
+    end
   end
 
   describe '#next_column_choice' do
