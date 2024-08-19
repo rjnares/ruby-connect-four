@@ -73,20 +73,22 @@ class Board
       win_diagonally_bottom_left_to_top_right?(0, 0, search_string)
   end
 
+  def diagonals(column_index, row_index, top_left_to_bottom_right: true)
+    diagonals = []
+
+    while in_range?(column_index, row_index)
+      diagonals << (board[column_index][row_index] || ' ')
+      column_index += 1
+      row_index += (top_left_to_bottom_right ? -1 : 1)
+    end
+
+    diagonals
+  end
+
   def win_diagonally_top_left_to_bottom_right?(column_index, row_index, search_string)
     return false unless in_range?(column_index, row_index)
 
-    c = column_index
-    r = row_index
-    diagonals = []
-
-    while in_range?(c, r)
-      diagonals << (board[c][r].nil? ? ' ' : board[c][r])
-      c += 1
-      r -= 1
-    end
-
-    return true if diagonals.join.include?(search_string)
+    return true if diagonals(column_index, row_index).join.include?(search_string)
 
     win_diagonally_top_left_to_bottom_right?(column_index, row_index - 1, search_string) ||
       win_diagonally_top_left_to_bottom_right?(column_index + 1, row_index, search_string)
@@ -95,17 +97,7 @@ class Board
   def win_diagonally_bottom_left_to_top_right?(column_index, row_index, search_string)
     return false unless in_range?(column_index, row_index)
 
-    c = column_index
-    r = row_index
-    diagonals = []
-
-    while in_range?(c, r)
-      diagonals << (board[c][r].nil? ? ' ' : board[c][r])
-      c += 1
-      r += 1
-    end
-
-    return true if diagonals.join.include?(search_string)
+    return true if diagonals(column_index, row_index, top_left_to_bottom_right: false).join.include?(search_string)
 
     win_diagonally_bottom_left_to_top_right?(column_index, row_index + 1, search_string) ||
       win_diagonally_bottom_left_to_top_right?(column_index + 1, row_index, search_string)
