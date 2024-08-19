@@ -14,12 +14,10 @@ class Board
   def insert(column_index, token)
     row_index = board[column_index]&.index(nil)
 
-    if row_index
-      board[column_index][row_index] = token
-      return true
-    end
+    return false unless row_index
 
-    false
+    board[column_index][row_index] = token
+    true
   end
 
   def full?
