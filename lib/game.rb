@@ -13,6 +13,7 @@ class Game
 
   def initialize(board = Board.new)
     @board = board
+    @winner = nil
   end
 
   def play
@@ -30,6 +31,18 @@ class Game
   private
 
   attr_reader :board
+  attr_accessor :winner
+
+  def game_over?(token)
+    if board.win?(token)
+      self.winner = token
+      return true
+    elsif board.full?
+      return true
+    end
+
+    false
+  end
 
   def string_to_int(string)
     Integer(string || '', 10)

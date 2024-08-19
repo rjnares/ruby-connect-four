@@ -22,6 +22,12 @@ describe Game do
         expect(actual).not_to eq(board)
       end
     end
+
+    it 'sets a winner instance variable to nil' do
+      actual = game.instance_variable_get(:@winner)
+      expect(actual).to be_nil
+    end
+  end
   end
 
   describe '#next_column_choice' do
