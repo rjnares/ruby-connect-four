@@ -92,6 +92,28 @@ describe Board do
     end
   end
 
+  describe '#full?' do
+    context 'when board is empty' do
+      it 'returns false' do
+        expect(board.full?).to eq(false)
+      end
+    end
+
+    context 'when board is not empty or full' do
+      it 'returns false' do
+        array.each_with_index { |column, index| column[index] = '#' }
+        expect(board.full?).to eq(false)
+      end
+    end
+
+    context 'when board is full' do
+      it 'returns true' do
+        array.each { |column| column.fill('#') }
+        expect(board.full?).to eq(true)
+      end
+    end
+  end
+
   describe '#win?' do
     let(:token) { '#' }
 

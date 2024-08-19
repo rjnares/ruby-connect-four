@@ -22,6 +22,10 @@ class Board
     false
   end
 
+  def full?
+    board.flatten.count(nil).zero?
+  end
+
   def win?(token)
     win_vertically?(token) || win_horizontally?(token) || win_diagonally?(token)
   end
