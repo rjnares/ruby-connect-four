@@ -133,5 +133,6 @@ class Board
   def print_columns_row
     puts
     0.upto(WIDTH - 1) { |column_index| print " #{column_index} " }
+    puts
   end
 end
