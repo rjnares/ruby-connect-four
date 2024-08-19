@@ -63,7 +63,7 @@ class Board
 
     HEIGHT.times do |row_index|
       row = board.each_with_object([]) { |column, array| array << column[row_index] }
-      return true if row.join.include?(search_string)
+      return true if row.map { |t| t.nil? ? ' ' : t }.join.include?(search_string)
     end
 
     false
