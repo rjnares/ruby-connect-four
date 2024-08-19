@@ -140,17 +140,30 @@ describe Board do
       end
     end
 
-    context 'when four tokens are connected vertically' do
-      let(:column_index) { 3 }
-      let(:column) { array[column_index] }
+    context 'when column contains four connected tokens' do
+      let(:column) { array[0] }
 
       before do
-        4.times { |row_index| column[row_index] = token }
+        column.fill(token)
       end
 
       it 'returns true' do
         result = board.win?(token)
         expect(result).to eq(true)
+      end
+    end
+
+    context 'when column contains four non-connected tokens' do
+      let(:column) { array[0] }
+
+      before do
+        column.fill(token)
+        column[3] = nil
+      end
+
+      it 'returns false' do
+        result = board.win?(token)
+        expect(result).to eq(false)
       end
     end
 

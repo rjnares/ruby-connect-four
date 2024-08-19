@@ -53,7 +53,9 @@ class Board
 
   def win_vertically?(token)
     search_string = token * 4
-    board.any? { |column| column.join.include?(search_string) }
+    board.any? do |column|
+      column.map { |t| t.nil? ? ' ' : t }.join.include?(search_string)
+    end
   end
 
   def win_horizontally?(token)
