@@ -33,6 +33,10 @@ class Game
   attr_reader :board
   attr_accessor :winner
 
+  def next_cpu_column_choice
+    board.available_columns.sample
+  end
+
   def game_over?(token)
     if board.win?(token)
       self.winner = token
