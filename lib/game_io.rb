@@ -49,4 +49,34 @@ module GameIO
       Current game state
     HEREDOC
   end
+
+  def player_win_message
+    board.draw
+
+    puts <<~HEREDOC
+
+      You connected four tokens...
+      Game over, you win!
+    HEREDOC
+  end
+
+  def player_lose_message
+    board.draw
+
+    puts <<~HEREDOC
+
+      CPU connected four tokens...
+      Game over, you lose!
+    HEREDOC
+  end
+
+  def tie_message
+    board.draw
+
+    puts <<~HEREDOC
+
+      All spaces are filled...
+      Game over, it's a tie!
+    HEREDOC
+  end
 end
