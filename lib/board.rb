@@ -41,6 +41,12 @@ class Board
     board[column].count(nil).positive?
   end
 
+  def available_columns
+    board.each_with_object([]).with_index do |(column, columns), index|
+      columns << index if column.count(nil).positive?
+    end
+  end
+
   private
 
   attr_reader :board

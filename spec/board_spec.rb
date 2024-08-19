@@ -250,4 +250,37 @@ describe Board do
       end
     end
   end
+
+  describe '#available_columns' do
+    context 'when columns 0-6 are not full' do
+      it 'returns columns 0-6 in an array' do
+        result = board.available_columns
+        expect(result).to eq([0, 1, 2, 3, 4, 5, 6])
+      end
+    end
+
+    context 'when columns 0-3 are full' do
+      it 'returns columns 4-6 in an array' do
+        0.upto(3) { |i| array[i].fill('#') }
+        result = board.available_columns
+        expect(result).to eq([4, 5, 6])
+      end
+    end
+
+    context 'when columns 4-6 are full' do
+      it 'returns columns 0-3 in an array' do
+        4.upto(6) { |i| array[i].fill('#') }
+        result = board.available_columns
+        expect(result).to eq([0, 1, 2, 3])
+      end
+    end
+
+    context 'when columns 0-6 are full' do
+      it 'returns an empty array' do
+        0.upto(6) { |i| array[i].fill('#') }
+        result = board.available_columns
+        expect(result).to eq([])
+      end
+    end
+  end
 end
